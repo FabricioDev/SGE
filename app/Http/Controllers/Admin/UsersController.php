@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Forms\UserForm;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Kris\LaravelFormBuilder\Form;
 
 class UsersController extends Controller
 {
@@ -25,7 +27,11 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        $form = \FormBuilder::create(UserForm::class, [
+            'url' => route('admin.users.store'),
+            'method' => 'POST'
+        ]);
+        return view('admin.users.create', compact('form'));
     }
 
     /**
@@ -36,7 +42,15 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /** @var Form $form */
+        $form = \FormBuilder::create(UserForm::class);
+
+        if($form->isValid()){
+            return redirect()
+                ->back()
+                ->withErrors($form->getErrors())
+                ->withInput();
+        }
     }
 
     /**
