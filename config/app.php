@@ -177,6 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         \Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
+        Bootstrapper\BootstrapperL5ServiceProvider::class,
 
     ],
 
@@ -227,6 +228,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'FormBuilder' => \Kris\LaravelFormBuilder\Facades\FormBuilder::class,
+        'Table' => Bootstrapper\Facades\Table::class,
+        'Button' => Bootstrapper\Facades\Button::class,
 
     ],
 
