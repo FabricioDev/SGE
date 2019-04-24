@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@user.com',
             'password' => bcrypt('s3cr3t'),
+            'enrolment' => 100000,
         ]);
     }
 }
