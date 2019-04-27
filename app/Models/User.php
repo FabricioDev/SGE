@@ -5,6 +5,7 @@ namespace App\Models;
 use Bootstrapper\Interfaces\TableInterface;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\UserCreated;
 
 class User extends Authenticatable implements TableInterface
 {
@@ -34,17 +35,23 @@ class User extends Authenticatable implements TableInterface
     public static function createFully($data){
         $password = str_random(7);
         $data['password'] = $password;
+        /** @var User $user */
         $user = parent::create($data+['enrolment' => str_random(7)]);
         self::assignEnrolment($user, self::ROLE_ADMIN);
+        //self::assignRole($user, $data['type']);
         $user->save();
+        if(isset($data['send_mail'])){
+            $token = \Password::broker()->createToken($user);
+            $user->notify(new UserCreated($token));
+        }
         return $user;
     }
 
     public static function assignEnrolment(User $user, $type){
         $types = [
             self::ROLE_ADMIN => 100000,
-            self::ROLE_TEACHER => 200000,
-            self::ROLE_STUDENT => 300000,
+            self::ROLE_TEACHER => 400000,
+            self::ROLE_STUDENT => 700000,
         ];
         $user->enrolment = $types[$type] + $user->id;
         return $user->enrolment;

@@ -13,9 +13,10 @@ class UserCreated extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($token)
     {
         //
+        $this->token = $token;
     }
 
     /**
@@ -42,7 +43,9 @@ class UserCreated extends Notification
                     ->subject("Sua conta no $appName foi criada com sucesso!")
                     ->greeting("Olá {$notifiable->name}, seja bem-vindo ao $appName")
                     ->line("Seu número de Matrícula é: {$notifiable->enrolment}")
-                    ->line('Obrigado por usar o nosso Sistema.');
+                    ->action('Clique aqui para redefinir a sua senha.',route('password.reset',$this->token))
+                    ->line('Obrigado por usar o nosso Sistema.')
+                    ->salutation('Atenciosamente, SISG');
     }
 
 }
