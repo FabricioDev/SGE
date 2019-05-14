@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -19,18 +19,44 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@user.com',
             'password' => bcrypt('s3cr3t'),
             'enrolment' => 100000,
-        ]);
+        ])->each(function (User $user){
+            User::assignRole($user, User::ROLE_ADMIN);
+            $user->save();
+        });
         factory(User::class)->create([
             'name' => 'Fabricio M. Damasceno',
             'email' => 'fabricio.devwebrj@gmail.com',
             'password' => bcrypt('s3cr3t'),
             'enrolment' => 100001,
-        ]);
+        ])->each(function (User $user){
+            User::assignRole($user, User::ROLE_ADMIN);
+            $user->save();
+        });
         factory(User::class)->create([
             'name' => 'Uatson',
             'email' => 'jaguarinternet@gmail.com',
             'password' => bcrypt('J@gu@r'),
             'enrolment' => 100002,
-        ]);
+        ])->each(function (User $user){
+            User::assignRole($user, User::ROLE_ADMIN);
+            $user->save();
+        });
+
+        // Criando Professor
+        factory(User::class)->create([
+            'enrolment' => User::assignEnrolment(new User(), User::ROLE_TEACHER)
+        ])->each(function (User $user) {
+            User::assignRole($user, User::ROLE_TEACHER);
+            $user->save();
+        });
+
+        // Criando Aluno
+        factory(User::class)->create([
+            'enrolment' => User::assignEnrolment(new User(), User::ROLE_STUDENT)
+        ])->each(function (User $user) {
+            User::assignRole($user, User::ROLE_STUDENT);
+            $user->save();
+        });
+
     }
 }
