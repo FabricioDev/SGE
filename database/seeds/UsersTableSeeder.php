@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('s3cr3t'),
             'enrolment' => 100000,
         ])->each(function (User $user){
-            User::assignRole($user, User::ROLE_ADMIN);
+            User::assingRole($user, User::ROLE_ADMIN);
             $user->save();
         });
         factory(User::class)->create([
@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('s3cr3t'),
             'enrolment' => 100001,
         ])->each(function (User $user){
-            User::assignRole($user, User::ROLE_ADMIN);
+            User::assingRole($user, User::ROLE_ADMIN);
             $user->save();
         });
         factory(User::class)->create([
@@ -38,14 +38,14 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('J@gu@r'),
             'enrolment' => 100002,
         ])->each(function (User $user){
-            User::assignRole($user, User::ROLE_ADMIN);
+            User::assingRole($user, User::ROLE_ADMIN);
             $user->save();
         });
 
         // Criando Professor
         factory(User::class,10)->create()->each(function(User $user){
             if(!$user->userable) {
-                User::assignRole($user, User::ROLE_TEACHER);
+                User::assingRole($user, User::ROLE_TEACHER);
                 User::assignEnrolment(new User(), User::ROLE_TEACHER);
                 $user->save();
             }
@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
         // Criando Aluno
         factory(User::class,10)->create()->each(function(User $user){
             if(!$user->userable) {
-                User::assignRole($user, User::ROLE_STUDENT);
+                User::assingRole($user, User::ROLE_STUDENT);
                 User::assignEnrolment(new User(), User::ROLE_STUDENT);
                 $user->save();
             }
