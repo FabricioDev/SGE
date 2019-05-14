@@ -45,7 +45,7 @@ class UserCreated extends Notification
                     ->line("Seu número de Matrícula é: {$notifiable->enrolment}")
                     ->action('Clique aqui para redefinir a sua senha.',route('password.reset',$this->token))
                     ->line('Obrigado por usar o nosso Sistema.')
-                    ->salutation('Atenciosamente, SISG');
+                    ->salutation('Atenciosamente, SGE');
     }
 
 }
