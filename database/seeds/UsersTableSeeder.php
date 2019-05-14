@@ -43,19 +43,21 @@ class UsersTableSeeder extends Seeder
         });
 
         // Criando Professor
-        factory(User::class)->create([
-            'enrolment' => User::assignEnrolment(new User(), User::ROLE_TEACHER)
-        ])->each(function (User $user) {
-            User::assignRole($user, User::ROLE_TEACHER);
-            $user->save();
+        factory(User::class,10)->create()->each(function(User $user){
+            if(!$user->userable) {
+                User::assignRole($user, User::ROLE_TEACHER);
+                User::assignEnrolment(new User(), User::ROLE_TEACHER);
+                $user->save();
+            }
         });
 
         // Criando Aluno
-        factory(User::class)->create([
-            'enrolment' => User::assignEnrolment(new User(), User::ROLE_STUDENT)
-        ])->each(function (User $user) {
-            User::assignRole($user, User::ROLE_STUDENT);
-            $user->save();
+        factory(User::class,10)->create()->each(function(User $user){
+            if(!$user->userable) {
+                User::assignRole($user, User::ROLE_STUDENT);
+                User::assignEnrolment(new User(), User::ROLE_STUDENT);
+                $user->save();
+            }
         });
 
     }
