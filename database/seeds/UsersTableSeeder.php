@@ -15,12 +15,10 @@ class UsersTableSeeder extends Seeder
         //Usuários padrões do sistema
         //Pode logar com o e-mail ou matricula
         factory(User::class)->create([
-            'name' => 'Admin',
             'email' => 'admin@user.com',
-            'password' => bcrypt('s3cr3t'),
             'enrolment' => 100000,
         ])->each(function (User $user){
-            User::assingRole($user, User::ROLE_ADMIN);
+            User::assingRole($user, User::ROLE_TEACHER);
             $user->save();
         });
         factory(User::class)->create([
