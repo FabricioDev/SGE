@@ -15,28 +15,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('admin')->group(function(){
+Route::prefix('admin')->group(function (){
     Auth::routes();
 
-    Route::group([
-        'namespace' => 'Admin\\',
-        'prefix' => 'users',
-        'as' => 'admin.users.'
-    ], function(){
-        Route::name('settings.edit')->get('settings', 'UserSettingsController@edit');
-        Route::name('settings.update')->put('settings', 'UserSettingsController@update');
+    Route::group(['prefix' => 'users', 'as' => 'admin.users.'], function (){
+        Route::name('settings.edit')->get('settings', 'Admin\UserSettingsController@edit');
+        Route::name('settings.update')->put('update', 'Admin\UserSettingsController@update');
     });
 
     Route::group([
         'namespace' => 'Admin\\',
         'as' => 'admin.',
         'middleware' => ['auth', 'can:admin']
-    ], function(){
+    ], function (){
         Route::name('dashboard')->get('/dashboard', function () {
             return "Estou no Dashboard";
         });
-        Route::group(['prefix' => 'users', 'as' => 'users.'],function (){
+        Route::group(['prefix' => 'users', 'as' => 'users.'], function (){
             Route::name('show_details')->get('show_details', 'UsersController@showDetails');
+            Route::group(['prefix' => '/{user}/profile'], function () {
+                Route::name('profile.edit')->get('', 'UserProfileController@edit');
+                Route::name('profile.update')->put('', 'UserProfileController@update');
+            });
         });
         Route::resource('users', 'UsersController');
     });
