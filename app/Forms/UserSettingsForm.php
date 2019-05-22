@@ -10,8 +10,11 @@ class UserSettingsForm extends Form
     {
         $this
             ->add('password', 'password', [
-                'rules' => 'required|min:6|max:16|confirmed'
+                'rules' => 'required|min:6|max:16|confirmed',
+                'label' => 'Senha'
             ])
-            ->add('password_confirmation', 'password');
+            ->add('password_confirmation', 'password', [
+                'label' => 'Confirmar Senha'
+            ]);
     }
 }
