@@ -22,7 +22,7 @@ class UserForm extends Form
             ->add('type', 'select', [
                 'label' => 'Tipo de usuário',
                 'choices' => $this->roles(),
-                'rules' => 'required|in:'.implode(',', array_keys($this->roles()))
+                'rules' => "required|in:" . implode(',', array_keys($this->roles()))
             ])
             ->add('send_mail', 'checkbox', [
                 'label' => 'Enviar e-mail de boas-vindas',
@@ -31,11 +31,12 @@ class UserForm extends Form
             ]);
     }
 
-    protected function roles(){
+    protected function roles()
+    {
         return [
             User::ROLE_ADMIN => 'Administrador',
             User::ROLE_TEACHER => 'Professor',
-            User::ROLE_STUDENT => 'Aluno',
+            User::ROLE_STUDENT => 'Estudante'
         ];
     }
 }

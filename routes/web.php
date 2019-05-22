@@ -20,6 +20,15 @@ Route::prefix('admin')->group(function(){
 
     Route::group([
         'namespace' => 'Admin\\',
+        'prefix' => 'users',
+        'as' => 'admin.users.'
+    ], function(){
+        Route::name('settings.edit')->get('settings', 'UserSettingsController@edit');
+        Route::name('settings.update')->put('settings', 'UserSettingsController@update');
+    });
+
+    Route::group([
+        'namespace' => 'Admin\\',
         'as' => 'admin.',
         'middleware' => ['auth', 'can:admin']
     ], function(){
