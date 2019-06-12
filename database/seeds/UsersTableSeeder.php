@@ -20,33 +20,17 @@ class UsersTableSeeder extends Seeder
             'enrolment' => 100001,
             'password' => bcrypt('s3cr3t')
         ])->each(function (User $user){
+            $profile = factory(UserProfile::class)->make();
+            $user->profile()->create($profile->toArray());
             User::assingRole($user, User::ROLE_TEACHER);
-            $user->save();
-        });
-
-        factory(User::class)->create([
-            'name' => 'Fabricio M. Damasceno',
-            'email' => 'fabricio.devwebrj@gmail.com',
-            'password' => bcrypt('s3cr3t'),
-            'enrolment' => 100002,
-        ])->each(function (User $user){
-            User::assingRole($user, User::ROLE_ADMIN);
-            $user->save();
-        });
-
-        factory(User::class)->create([
-            'name' => 'Uatson',
-            'email' => 'jaguarinternet@gmail.com',
-            'password' => bcrypt('J@gu@r'),
-            'enrolment' => 100003,
-        ])->each(function (User $user){
-            User::assingRole($user, User::ROLE_ADMIN);
             $user->save();
         });
 
         // Criando Professor
         factory(User::class,5)->create()->each(function(User $user){
             if(!$user->userable) {
+                $profile = factory(UserProfile::class)->make();
+                $user->profile()->create($profile->toArray());
                 User::assingRole($user, User::ROLE_TEACHER);
                 User::assignEnrolment(new User(), User::ROLE_TEACHER);
                 $user->save();
@@ -56,6 +40,8 @@ class UsersTableSeeder extends Seeder
         // Criando Aluno
         factory(User::class,5)->create()->each(function(User $user){
             if(!$user->userable) {
+                $profile = factory(UserProfile::class)->make();
+                $user->profile()->create($profile->toArray());
                 User::assingRole($user, User::ROLE_STUDENT);
                 User::assignEnrolment(new User(), User::ROLE_STUDENT);
                 $user->save();
