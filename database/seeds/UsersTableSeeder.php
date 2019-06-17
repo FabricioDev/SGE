@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\UserProfile;
 
 class UsersTableSeeder extends Seeder
 {
@@ -27,7 +28,7 @@ class UsersTableSeeder extends Seeder
         });
 
         // Criando Professor
-        factory(User::class,5)->create()->each(function(User $user){
+        factory(User::class,5)->create()->all(function(User $user){
             if(!$user->userable) {
                 $profile = factory(UserProfile::class)->make();
                 $user->profile()->create($profile->toArray());
@@ -38,7 +39,7 @@ class UsersTableSeeder extends Seeder
         });
 
         // Criando Aluno
-        factory(User::class,5)->create()->each(function(User $user){
+        factory(User::class,5)->create()->all(function(User $user){
             if(!$user->userable) {
                 $profile = factory(UserProfile::class)->make();
                 $user->profile()->create($profile->toArray());
