@@ -23,12 +23,12 @@ class UsersTableSeeder extends Seeder
         ])->each(function (User $user){
             $profile = factory(UserProfile::class)->make();
             $user->profile()->create($profile->toArray());
-            User::assingRole($user, User::ROLE_TEACHER);
+            User::assingRole($user, User::ROLE_ADMIN);
             $user->save();
         });
 
         // Criando Professor
-        factory(User::class,5)->create()->all(function(User $user){
+        factory(User::class,5)->create()->each(function(User $user){
             if(!$user->userable) {
                 $profile = factory(UserProfile::class)->make();
                 $user->profile()->create($profile->toArray());
@@ -39,7 +39,7 @@ class UsersTableSeeder extends Seeder
         });
 
         // Criando Aluno
-        factory(User::class,5)->create()->all(function(User $user){
+        factory(User::class,5)->create()->each(function(User $user){
             if(!$user->userable) {
                 $profile = factory(UserProfile::class)->make();
                 $user->profile()->create($profile->toArray());

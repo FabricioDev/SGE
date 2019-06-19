@@ -25,7 +25,7 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Models\UserProfile::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\UserProfile::class, function (Faker $faker) {
     return [
         'address' => $faker->address,
         'cep' => function() use($faker){
@@ -37,5 +37,22 @@ $factory->define(App\Models\UserProfile::class, function (Faker\Generator $faker
         'city' => $faker->city,
         'neighborhood' => $faker->city,
         'state' => collect(App\Models\State::$states)->random(),
+    ];
+});
+
+$factory->define(App\Models\Subject::class, function (Faker $faker) {
+    return [
+        'name' => $faker->word,
+    ];
+});
+
+$factory->define(App\Models\ClassInformation::class, function (Faker $faker) {
+    return [
+        'date_start' => $faker->date(),
+        'date_end' => $faker->date(),
+        'cycle' => rand(1,8),
+        'subdivision' => rand(1,16),
+        'semester' => rand(1,2),
+        'year' => rand(2019,2030),
     ];
 });
