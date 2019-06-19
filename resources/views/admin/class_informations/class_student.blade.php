@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <h3>Administração de alunos na turma</h3>
-            <class-student class-information="{{$class_information->id}}"></class-student>
+            <!-- Criar componente VueJS -->
         </div>
     </div>
 @endsection
